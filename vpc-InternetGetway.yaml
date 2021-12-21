@@ -1,0 +1,67 @@
+AWSTemplateFormatVersion: 2010-09-09
+Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties:
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      CidrBlock: 10.0.0.0/24
+      Tags:
+        - Key: Name
+          Value: VPC01
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 7361599e-573a-4b53-ac98-4e636ecd3fbc
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: IntGW01
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 1ddb70a1-ac13-4e31-afdc-de0d9704cc9d
+  VPCGatewayAttachment:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: cc5e19b0-2dd8-4927-bdf8-14d5ec846b62
+Outputs:
+  VPCId:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub '${AWS::StackName}-VPCID'
+  InternetGateway:
+    Description: InternetGateway
+    Value: !Ref InternetGateway
+    Export:
+      Name: !Sub '${AWS::StackName}-InternetGateway'
+Metadata:
+  'AWS::CloudFormation::Designer':
+    1ddb70a1-ac13-4e31-afdc-de0d9704cc9d:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 270
+        'y': 90
+      z: 1
+      embeds: []
+    7361599e-573a-4b53-ac98-4e636ecd3fbc:
+      size:
+        width: 150
+        height: 150
+      position:
+        x: 30
+        'y': 120
+      z: 1
+      embeds: []
+    cc5e19b0-2dd8-4927-bdf8-14d5ec846b62:
+      source:
+        id: 7361599e-573a-4b53-ac98-4e636ecd3fbc
+      target:
+        id: 1ddb70a1-ac13-4e31-afdc-de0d9704cc9d
