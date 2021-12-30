@@ -13,7 +13,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId:  ami-061ac2e015473fbe2
-      KeyName: webserver_key
+      KeyName: cf-keypair-1
       Tags:
         - Key: Name
           Value: WebServer01
@@ -32,7 +32,7 @@ Resources:
     Properties:
       InstanceType: t2.micro
       ImageId: ami-061ac2e015473fbe2
-      KeyName: webserver_key
+      KeyName: cf-keypair-2
       Tags:
         - Key: Name
           Value: WebServer02
@@ -46,32 +46,11 @@ Resources:
     Metadata:
       'AWS::CloudFormation::Designer':
         id: e0d44d1a-18b1-47db-92b2-71a9376bce33
-  Bastion:
-    Type: 'AWS::EC2::Instance'
-    Properties:
-      InstanceType: t2.micro
-      ImageId: string
-      KeyName: webserver_key
-      Tags:
-        - Key: Name
-          Value: Bastion
-      NetworkInterfaces:
-        - AssociatePublicIpAddress: 'true'
-          DeviceIndex: '0'
-          GroupSet:
-            - !ImportValue 
-              'Fn::Sub': '${SecurityGroup}-WebServerSecurityGroup'
-          SubnetId: !ImportValue 
-            'Fn::Sub': '${SUBNETS}-Subnet01'
+
     Metadata:
       'AWS::CloudFormation::Designer':
         id: f646646c-aa3f-4fec-9252-9eb16f19266a
 Outputs:
-  Bastion:
-    Description: EC2 instance exported values
-    Value: !Ref Bastion
-    Export:
-      Name: !Sub '${AWS::StackName}-Bastion'
   WebServer01:
     Description: EC2 instance exported values
     Value: !Ref WebServer01

@@ -14,8 +14,8 @@
         "DeletionPolicy" : "Delete",
         "Properties" : {
           "VpcId" : { "Fn::ImportValue" : {"Fn::Sub": "${NetworkStackNameParameter}-VPCID" } },
-          "CidrBlock" : "10.0.0.0/25",
-          "AvailabilityZone" : "ap-northeast-1a",
+          "CidrBlock" : "10.0.0.0/24",
+          "AvailabilityZone" : "us-east-1a",
           "Tags" : [{ "Key" : "Name", "Value" : "Subnet-01" }]
         }
       },
@@ -25,8 +25,8 @@
         "DeletionPolicy" : "Delete",
         "Properties" : {
           "VpcId" : { "Fn::ImportValue" : {"Fn::Sub": "${NetworkStackNameParameter}-VPCID" } },
-          "CidrBlock" : "10.0.0.128/25",
-          "AvailabilityZone" : "ap-northeast-1c",
+          "CidrBlock" : "10.0.0.0/us-east-1a",
+          "AvailabilityZone" : "us-east-1b",
           "Tags" : [{ "Key" : "Name", "Value" : "Subnet-02" }]
         }
       },
