@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EC2 instances.
+Parameters:
+  VPC:
+    Type: String
+  SUBNETS:
+    Type: String
+  SecurityGroup:
+    Type: String
+Resources:
+  WebServer01:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      ImageId:  ami-061ac2e015473fbe2
+      KeyName: cf-keypair-1
+      Tags:
+        - Key: Name
+          Value: WebServer01
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          GroupSet:
+            - !ImportValue 
+              'Fn::Sub': '${SecurityGroup}-WebServerSecurityGroup'
+          SubnetId: !ImportValue 
+            'Fn::Sub': '${SUBNETS}-Subnet01'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: fc33911e-cd3b-496b-9975-a77684964fee
+  WebServer02:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-061ac2e015473fbe2
+      KeyName: cf-keypair-2
+      Tags:
+        - Key: Name
+          Value: WebServer02
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          GroupSet:
+            - !ImportValue 
+              'Fn::Sub': '${SecurityGroup}-WebServerSecurityGroup'
+          SubnetId: !ImportValue 
+            'Fn::Sub': '${SUBNETS}-Subnet02'
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: e0d44d1a-18b1-47db-92b2-71a9376bce33
+
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: f646646c-aa3f-4fec-9252-9eb16f19266a
+Outputs:
+  WebServer01:
+    Description: EC2 instance exported values
+    Value: !Ref WebServer01
+    Export:
+      Name: !Sub '${AWS::StackName}-WebServer01'
+  WebServer02:
+    Description: EC2 instance exported values
+    Value: !Ref WebServer02
+    Export:
+      Name: !Sub '${AWS::StackName}-WebServer02'
